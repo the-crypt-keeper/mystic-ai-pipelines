@@ -1,0 +1,22 @@
+runtime:
+  container_commands:
+    - apt-get update
+    - apt-get install -y build-essential git
+  python:
+    version: "3.10"
+    requirements:
+      - "git+https://github.com/mystic-ai/pipeline.git@v1.1.0"
+      - "torch==2.1.2"
+      - "transformers==4.36.1"
+      - "diffusers==0.19.3"
+      - "accelerate==0.21.0"
+      - "hf-transfer~=0.1"
+      - "vllm==0.2.6"
+      - "exllamav2==0.0.11"
+      - "ray==2.6.3"
+      - "pandas==2.1.4"
+    cuda_version: "12.1"
+accelerators: ["nvidia_3090"]
+accelerator_memory: 24_000
+pipeline_graph: awq_pipeline:my_pipeline
+pipeline_name: mikesai/mistral-7b-instruct-v0.2-awq
