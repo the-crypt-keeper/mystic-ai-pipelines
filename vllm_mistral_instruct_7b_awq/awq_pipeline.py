@@ -1,5 +1,8 @@
 from typing import List
-from vllm import LLM, SamplingParams
+try:
+    from vllm import LLM, SamplingParams
+except:
+    pass
 from pipeline import Pipeline, entity, pipe
 from pipeline.objects.graph import InputField, InputSchema, Variable
 import time
