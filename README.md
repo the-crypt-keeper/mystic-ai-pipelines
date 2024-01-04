@@ -4,7 +4,7 @@ This is proof of concept code using beta SDK - subject to change at any time.
 
 ## Available Pipelines
 
-`vllm_mistral_instruct_7b_awq` - vLLM 0.2.6 loading TheBloke/Mistral-7B-Instruct-v0.2-AWQ with 8k context
+`vllm_mistral_instruct_7b_awq` - vLLM 0.2.6 loading TheBloke/Mistral-7B-Instruct-v0.2-AWQ with 8k context [>>PLAYGROUND DEMO<<](https://beta.v4.mystic.ai/mikesai/mistral-7b-instruct-v0.2-awq/play)
 
 ## Getting Started
 
