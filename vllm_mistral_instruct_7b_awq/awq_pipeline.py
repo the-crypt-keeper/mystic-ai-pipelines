@@ -2,14 +2,19 @@ from typing import List
 from vllm import LLM, SamplingParams
 from pipeline import Pipeline, entity, pipe
 from pipeline.objects.graph import InputField, InputSchema, Variable
+import time
 
 class ModelKwargs(InputSchema):
-    do_sample: bool | None = InputField(default=False)
-    use_cache: bool | None = InputField(default=True)
-    temperature: float | None = InputField(default=0.6)
-    top_k: float | None = InputField(default=50)
-    top_p: float | None = InputField(default=0.9)
+    n: int | None = InputField(default=1)
+    best_of: int | None = InputField(default=1)
+    use_beam_search: bool | None = InputField(default=False)
+    full_result: bool | None = InputField(default=False)
+    ignore_eos: bool | None = InputField(default=False)
+    temperature: float | None = InputField(default=1.0)
+    top_k: float | None = InputField(default=-1)
+    top_p: float | None = InputField(default=1.0)
     max_tokens: int | None = InputField(default=100, ge=1, le=4096)
+    logprobs: int | None = InputField(default=0)
     
 @entity
 class MistralAWQ:
@@ -20,14 +25,24 @@ class MistralAWQ:
     @pipe
     def inference(self, prompts: list, kwargs: ModelKwargs) -> List[str]:
         sampling_params = SamplingParams(
+            n=kwargs.n,
+            best_of=kwargs.best_of,
+            use_beam_search=kwargs.use_beam_search,
+            ignore_eos=kwargs.ignore_eos,
             temperature=kwargs.temperature,
             top_p=kwargs.top_p,
             max_tokens=kwargs.max_tokens,
+            logprobs=None if kwargs.logprobs==0 else kwargs.logprobs
         )
 
+        t0 = time.time()
         result = self.llm.generate(prompts, sampling_params)
+        dur = time.time() - t0
+        
+        total_tokens = sum([len(output.token_ids) for t in result for output in t.outputs])
+        print(f"total_tokens = {total_tokens}, dur = {dur:.2f} sec, rate = {total_tokens/dur:.2f} tok/sec")
 
-        return [t.outputs[0].text for t in result]
+        return result if kwargs.full_result else [output.text for t in result for output in t.outputs]
     
 with Pipeline() as builder:
     prompt = Variable(list, default=["My name is"])
