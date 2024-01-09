@@ -17,7 +17,7 @@ runtime:
       - "ray==2.6.3"
       - "pandas==2.1.4"
     cuda_version: "12.1"
-accelerators: ["nvidia_t4"]
-accelerator_memory: 15_000
+accelerators: ["nvidia_a100"]
+accelerator_memory: 32_000
 pipeline_graph: exllamav2_pipeline:my_pipeline
 pipeline_name: mikesai/exllamav2-mixtral-instruct-8x7b-exl2
