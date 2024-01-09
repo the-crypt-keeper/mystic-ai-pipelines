@@ -14,6 +14,8 @@ class ModelKwargs(InputSchema):
     full_result: bool | None = InputField(default=False)
     ignore_eos: bool | None = InputField(default=False)
     temperature: float | None = InputField(default=1.0)
+    presence_penalty: float | None = InputField(default=0.0)
+    frequency_penalty: float | None = InputField(default=0.0)
     top_k: float | None = InputField(default=-1)
     top_p: float | None = InputField(default=1.0)
     max_tokens: int | None = InputField(default=100, ge=1, le=4096)
@@ -35,6 +37,8 @@ class MistralAWQ:
             temperature=kwargs.temperature,
             top_p=kwargs.top_p,
             max_tokens=kwargs.max_tokens,
+            presence_penalty=kwargs.presence_penalty,
+            frequency_penalty=kwargs.frequency_penalty,
             logprobs=None if kwargs.logprobs==0 else kwargs.logprobs
         )
 
@@ -44,8 +48,12 @@ class MistralAWQ:
         
         total_tokens = sum([len(output.token_ids) for t in result for output in t.outputs])
         print(f"total_tokens = {total_tokens}, dur = {dur:.2f} sec, rate = {total_tokens/dur:.2f} tok/sec")
+        
+        if not kwargs.full_result:
+            texts = [output.text for t in result for output in t.outputs]
+            result = { 'text': texts }
 
-        return result if kwargs.full_result else [output.text for t in result for output in t.outputs]
+        return { 'result': result, 'perf': { 'total_tokens': total_tokens, 'dur': dur, 'rate': total_tokens/dur } }
     
 with Pipeline() as builder:
     prompt = Variable(list, default=["My name is"])

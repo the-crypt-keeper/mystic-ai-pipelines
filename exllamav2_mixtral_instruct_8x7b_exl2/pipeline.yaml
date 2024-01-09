@@ -19,5 +19,5 @@ runtime:
     cuda_version: "12.1"
 accelerators: ["nvidia_t4"]
 accelerator_memory: 15_000
-pipeline_graph: awq_pipeline:my_pipeline
-pipeline_name: mikesai/mistral-7b-instruct-v0.2-awq
+pipeline_graph: exllamav2_pipeline:my_pipeline
+pipeline_name: mikesai/exllamav2-mixtral-instruct-8x7b-exl2

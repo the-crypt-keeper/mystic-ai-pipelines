@@ -8,15 +8,15 @@ This is proof of concept code using beta SDK - subject to change at any time.
 
 ## Getting Started
 
-This repository uses v1.1 of the pipeline SDK which can be installed with
+This repository uses v2.0 of the pipeline SDK which can be installed with
 
 ```
-pip install git+https://github.com/mystic-ai/pipeline.git@v1.1.0
+pip install git+https://github.com/mystic-ai/pipeline.git@v2.0.0
 ```
 
 Then use `pipeline cluster login -u https://beta.v4.mystic.ai/ -a mystic-api <API-KEY>` to log in.
 
-See [Documentation](https://docs.mystic.ai/v1.1.0/docs/getting-started)
+See [Documentation](https://docs.mystic.ai/v2.0.0/docs/getting-started)
 
 ## Testing
 
