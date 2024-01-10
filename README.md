@@ -1,7 +1,5 @@
 # mystic.ai pipelines for LLM inference
 
-This is proof of concept code using beta SDK - subject to change at any time.
-
 ## Available Pipelines
 
 `vllm_mistral_instruct_7b_awq` - vLLM 0.2.6 loading TheBloke/Mistral-7B-Instruct-v0.2-AWQ with 8k context [>>PLAYGROUND DEMO<<](https://beta.v4.mystic.ai/mikesai/mistral-7b-instruct-v0.2-awq/play)
@@ -11,10 +9,10 @@ This is proof of concept code using beta SDK - subject to change at any time.
 This repository uses v2.0 of the pipeline SDK which can be installed with
 
 ```
-pip install git+https://github.com/mystic-ai/pipeline.git@v2.0.0
+pip install pipeline-ai==2.0.0
 ```
 
-Then use `pipeline cluster login -u https://beta.v4.mystic.ai/ -a mystic-api <API-KEY>` to log in.
+Then use `pipeline cluster login -u https://www.mystic.ai/ -a mystic-api <API-KEY>` to log in.
 
 See [Documentation](https://docs.mystic.ai/v2.0.0/docs/getting-started)
 
